@@ -20,6 +20,7 @@ function printReceipt(inputs) {
     promotions[0].barcodes.forEach(data => {
       if (isDiscount(item, data)) {
         item.subtotal = item.price * (item.count - 1)
+        item.Discount = true;
       }
     })
     sum += (item.subtotal);
@@ -42,7 +43,7 @@ function statistics(inputs) {
   })
   array_key.forEach(data => {
     if (!count.find(element => element.key === data[0])) {
-      count.push({key: data[0], count: 0, name: '', unit: '', price: 0.00, subtotal: 0.00})
+      count.push({key: data[0], count: 0, name: '', unit: '', price: 0.00, subtotal: 0.00,Discount:false})
     }
   })
   count.forEach(item => {
@@ -64,11 +65,17 @@ function isDiscount(item, data) {
 function splicedCharacter(count, sum, primeCost) {
   let expectText = "";
 
-  expectText += `***<没钱赚商店>收据***`;
+  expectText += `***<没钱赚商店>购物清单***`;
   count.forEach(item => {
     expectText += `\n名称：${item.name}，数量：${item.count}${item.unit}，单价：${item.price}(元)，小计：${(item.subtotal).toFixed(2)}(元)`;
   })
-  expectText += `\n----------------------\n总计：${sum.toFixed(2)}(元)\n节省：${(primeCost - sum).toFixed(2)}(元)\n**********************`;
+  expectText += `\n----------------------\n挥泪赠送商品：\n`;
+  count.forEach(item =>{
+  if(item.Discount){
+    expectText += `名称：${item.name}，数量：1${item.unit}\n`;
+  }
+})
+  expectText += `----------------------\n总计：${sum.toFixed(2)}(元)\n节省：${(primeCost - sum).toFixed(2)}(元)\n**********************`;
 
   return expectText;
 }

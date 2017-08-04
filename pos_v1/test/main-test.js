@@ -10,7 +10,7 @@ describe('pos', () => {
       'ITEM000001',
       'ITEM000001',
       'ITEM000001',
-      'ITEM000003-2.5',
+      'ITEM000003-2',
       'ITEM000005',
       'ITEM000005-2',
     ];
@@ -31,7 +31,6 @@ describe('pos', () => {
       '总计：51.00(元)\n' +
       '节省：7.50(元)\n' +
       '**********************';
-
 
     expect(console.log).toHaveBeenCalledWith(expectText);
   });
